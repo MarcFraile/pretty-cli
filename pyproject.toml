@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pretty-cli"
+name = "mff-pretty-cli"
 version = "0.1.0"
 description = "Simple helper to get pretty printing in the CLI."
 authors = ["Marc Fraile <marc.fraile.fabrega@gmail.com>"]
