@@ -2,9 +2,13 @@
 This package provides `PrettyCli`, a utility class for structured printing in the CLI.
 """
 
+import re
 from os import PathLike
 from dataclasses import asdict, is_dataclass
 from typing import Any, List, Optional
+
+
+ANSI_REGEX = re.compile("\u001b\[[^A-Za-z]*[A-Za-z]")
 
 
 class PrettyCli:
@@ -14,13 +18,14 @@ class PrettyCli:
     Formalizes my style choices for outputting data in the terminal into a cleaner system.
     """
 
-    def __init__(self, log_file: Optional[PathLike] = None):
+    def __init__(self, log_file: Optional[PathLike] = None, strip_ansi: bool = True):
         self.previous_line_blank = True # Used to decide if whitespace should be added above.
         self.indent = " " * 4
 
         if log_file is not None:
             self.log_file = log_file
             self._log_file_handle = open(log_file, mode="w", encoding="utf-8")
+            self.strip_ansi = strip_ansi
         else:
             self.log_file = None
             self._log_file_handle = None
@@ -32,6 +37,8 @@ class PrettyCli:
     def _print(self, text: str, end: Optional[str] = None) -> None:
             print(text, end=end)
             if self._log_file_handle is not None:
+                if self.strip_ansi:
+                    text = ANSI_REGEX.sub("", text)
                 print(text, end=end, file=self._log_file_handle)
 
     def blank(self) -> None:
