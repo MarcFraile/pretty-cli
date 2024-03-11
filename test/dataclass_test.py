@@ -12,10 +12,9 @@ class MyData:
     some_float: float
     some_string: str
 
-cli = PrettyCli()
-
 
 def main():
+    cli = PrettyCli()
     cli.main_title("DATACLASS TEST")
 
     my_data = MyData(
