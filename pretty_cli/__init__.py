@@ -2,7 +2,7 @@
 This package provides `PrettyCli`, a utility class for structured printing in the CLI.
 """
 
-
+from os import PathLike
 from dataclasses import asdict, is_dataclass
 from typing import Any, List, Optional
 
@@ -14,16 +14,32 @@ class PrettyCli:
     Formalizes my style choices for outputting data in the terminal into a cleaner system.
     """
 
-    def __init__(self):
+    def __init__(self, log_file: Optional[PathLike] = None):
         self.previous_line_blank = True # Used to decide if whitespace should be added above.
         self.indent = " " * 4
+
+        if log_file is not None:
+            self.log_file = log_file
+            self._log_file_handle = open(log_file, mode="w", encoding="utf-8")
+        else:
+            self.log_file = None
+            self._log_file_handle = None
+
+    def __del__(self):
+        if self._log_file_handle is not None:
+            self._log_file_handle.close()
+
+    def _print(self, text: str, end: Optional[str] = None) -> None:
+            print(text, end=end)
+            if self._log_file_handle is not None:
+                print(text, end=end, file=self._log_file_handle)
 
     def blank(self) -> None:
         """
         Add a blank line, IF the previous line was not blank as well.
         """
         if not self.previous_line_blank:
-            print()
+            self._print("")
             self.previous_line_blank = True
 
     def print(self, obj: Any, *, end: Optional[str] = None) -> None:
@@ -42,8 +58,8 @@ class PrettyCli:
             self._print_dict(asdict(obj))
             self.blank()
         else: # Default behavior: stringify the object and print it.
-            text = str(obj)
-            print(text.rstrip(), end=end)
+            text = str(obj).rstrip()
+            self._print(text, end)
             self.previous_line_blank = False
 
     def main_title(self, text: str) -> None:
