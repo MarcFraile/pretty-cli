@@ -34,7 +34,7 @@ class PrettyCli:
         * For others: casts to str and strips trailing whitespace.
         * end keyword is NOT respected for dicts. Otherwise works like print().
         """
-        if type(obj) is dict:
+        if isinstance(obj, dict):
             self._print_dict(obj)
             self.blank()
         else:
@@ -56,13 +56,10 @@ class PrettyCli:
         for line in lines:
             max_len = max(max_len, len(line))
 
-        # main_line = f"{side_padding} {text.strip().upper()} {side_padding}"
-        # secondary_line = "=" * len(main_line) # len() doesn't seem to behave well with Unicode (tried  你好！)
         cap_line = "=" * (max_len + 2 * (side_padding + 1))
 
         self.blank()
         self.print(cap_line)
-        # self.print(main_line)
         for line in lines:
             overflow = len(cap_line) - len(line) - 2
             left_pad = "=" * (overflow // 2)
