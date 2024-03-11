@@ -106,3 +106,17 @@ some_int:    42
 some_float:  3.141592653589793
 some_string: Lorem ipsum dolor sit amet.
 ```
+
+## Replicating to File
+
+Sometimes, we want to save a copy of the output to a log file. In Unix systems, one can use `tee`:
+
+```sh
+echo "Hi there" | tee hi.log
+```
+
+However, this is inconvenient in more complicated scenarios. For example, we might want to generate a timestamp within Python and use it for the file name, or we might want to strip color codes from the file output without using command-line tricks. `PrettyCli` has built-in support for replicating output to a file, with optional stripping of ANSI codes (on by default):
+
+```python
+cli = PrettyCli(log_file="path/to/file", strip_ansi=False) # strip_ansi defaults to True.
+```
