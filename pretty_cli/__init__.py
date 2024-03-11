@@ -1,4 +1,10 @@
+"""
+This package provides `PrettyCli`, a utility class for structured printing in the CLI.
+"""
+
+
 from typing import Any, List, Optional
+
 
 class PrettyCli:
     """

@@ -1,6 +1,6 @@
 # Pretty-CLI: Pretty Printing for the CLI
 
-This package provides `PrettyCli`, a class providing utilities for structured printing in the CLI. Simply use its `print()` and helper methods instead of the default `print()` and you're good to go!
+This package provides `PrettyCli`, a utility class for structured printing in the CLI. Simply use its `print()` and helper methods instead of the default `print()` and you're good to go!
 
 Here is a full example:
 
