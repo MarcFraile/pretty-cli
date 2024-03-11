@@ -3,6 +3,7 @@ This package provides `PrettyCli`, a utility class for structured printing in th
 """
 
 
+from dataclasses import asdict, is_dataclass
 from typing import Any, List, Optional
 
 
@@ -34,10 +35,13 @@ class PrettyCli:
         * For others: casts to str and strips trailing whitespace.
         * end keyword is NOT respected for dicts. Otherwise works like print().
         """
-        if isinstance(obj, dict):
+        if isinstance(obj, dict): # Pretty-print dicts.
             self._print_dict(obj)
             self.blank()
-        else:
+        elif is_dataclass(obj) and not isinstance(obj, type): # Treat dataclass objects as dicts.
+            self._print_dict(asdict(obj))
+            self.blank()
+        else: # Default behavior: stringify the object and print it.
             text = str(obj)
             print(text.rstrip(), end=end)
             self.previous_line_blank = False
