@@ -13,9 +13,18 @@ ANSI_REGEX = re.compile("\u001b\[[^A-Za-z]*[A-Za-z]")
 
 class PrettyCli:
     """
-    Ordered pretty printing in the terminal.
+    Simple opinionated pretty-printing for the terminal, with an option to copy the output to file.
 
-    Formalizes my style choices for outputting data in the terminal into a cleaner system.
+        Use `cli.print()` for basic printing; `cli.blank()` for ensuring separation between elements, and `cli.main_title()`, `cli.chapter()`, `cli.subchapter()`, `cli.section()` for different header styles.
+        Includes `cli.big_separator()` and `cli.small_separator()` for dividing lines.
+
+        Parameters
+        ----------
+        log_file: PathLike, default=None
+            If set to a valid path, everything printed to stdout will also be printed to the file (similar to using tee).
+
+        strip_ansi: bool, default=True
+            If `log_file` is set, indicates wether ANSI escape codes (e.g., terminal color codes) should be removed before printing to file.
     """
 
     def __init__(self, log_file: Optional[PathLike] = None, strip_ansi: bool = True):
