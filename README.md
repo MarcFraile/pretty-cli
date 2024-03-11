@@ -2,6 +2,11 @@
 
 This package provides `PrettyCli`, a utility class for structured printing in the CLI. Simply use its `print()` and helper methods instead of the default `print()` and you're good to go!
 
+The package is available in PyPi as `mff-pretty-cli`. You can install it with:
+```sh
+pip install mff-pretty-cli
+```
+
 Here is a full example of the available function calls:
 
 ```python
