@@ -33,7 +33,7 @@ class PrettyCli:
 
         if log_file is not None:
             self.log_file = log_file
-            self._log_file_handle = open(log_file, mode="w", encoding="utf-8")
+            self._log_file_handle = open(log_file, mode="w", encoding="utf-8", buffering=1)
             self.strip_ansi = strip_ansi
         else:
             self.log_file = None
